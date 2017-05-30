@@ -51,10 +51,7 @@
 <?php } 
 
 
-
-
-
-
+// create the content
 
 function directory_shortcode() {
 
