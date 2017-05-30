@@ -36,7 +36,7 @@ function directory_shortcode() {
 
 	//add addresses to exclude from list (without http(s)://), include empty string
 	$exclusions = array (
-            '',
+            'excluded.domain', //replace with required exclusions
             '' );
 
 	$wp_query->comments = get_comments( $args );
