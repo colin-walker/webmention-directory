@@ -9,14 +9,50 @@
 	 *
 	 * @package Webmention directory
 	 *
-   	 * Plugin Name: Webmention directory
+   	 * Plugin Name: Webmention Directory
    	 *
    	 * Description: Use a shortcode to display a list of authors who have engaged via webmentions
    	 *
-   	 * Version: 0.1
+   	 * Version: 0.2.0
    	 *
    	 * Author: Colin Walker
 	*/
+
+
+	add_action( 'admin_init', 'directory_settings' );
+	add_action( 'admin_menu', 'directory_menu' );
+
+    	// register settings
+
+	function directory_settings() {
+		register_setting( 'directory-settings-group', 'exclusions' );
+	}
+
+	// create menu/settings page
+
+	function directory_menu() {
+		add_menu_page('Webmention Directory Settings', 'Webmention Directory', 'administrator', 'directory-settings', 'directory_settings_page', 'dashicons-admin-generic', 4 );
+	}
+
+	function directory_settings_page() { ?>
+		<div class="wrap">
+		<h2>Webmention Directory</h2>
+		<p>The domains added below will be excluded from the webmentions directory.</p>
+		<p>Add multiple domains as comma separated values without http(s):// e.g. domain.name</p>
+
+		<form method="post" action="options.php">
+			<?php settings_fields( 'directory-settings-group' ); ?>
+			<p>Domains to exclude:</p>
+			<input type="text" name="exclusions" value="<?php echo esc_attr( get_option('exclusions') ); ?>" size="35" />
+			<br />
+			<?php submit_button(); ?>
+		</form>
+
+<?php } 
+
+
+
+
 
 
 
@@ -34,10 +70,11 @@ function directory_shortcode() {
 	$people = array();	//initalise author array to check against
 	$output = '';
 
-	//add addresses to exclude from list (without http(s)://), include empty string
-	$exclusions = array (
-            'excluded.domain', //replace with required exclusions
-            '' );
+	//get addresses to exclude
+    
+    $exclusions_str = get_option('exclusions');
+    $exclusions_str = preg_replace( '/[, ]/', ',', $exclusions_str );
+    $exclusions = explode( ',', $exclusions_str );
 
 	$wp_query->comments = get_comments( $args );
     
@@ -82,6 +119,6 @@ return $output;
 }
 
 
-add_shortcode( 'directory', 'directory_shortcode' );
+add_shortcode( 'wmdirectory', 'directory_shortcode' );
 
 ?>
