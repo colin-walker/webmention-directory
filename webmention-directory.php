@@ -36,9 +36,7 @@ function directory_shortcode() {
 
 	//add addresses to exclude from list (without http(s)://), include empty string
 	$exclusions = array (
-            'colinwalker.blog',
-            'colinwalker.me.uk',
-            'micro.blog',
+            '',
             '' );
 
 	$wp_query->comments = get_comments( $args );
