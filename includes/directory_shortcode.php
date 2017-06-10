@@ -62,6 +62,9 @@ $exclusions = explode( ',', $exclusions_str );
 			
 				//if author not yet listed add them to the array and display their link
 				if ( $check != 'yes' ) {
+					if ( $parse['host'] == 'micro.blog' ) {
+    						$host = substr( $author_url, 0, strrpos( $author_url, '/' ));
+					}
 					$people[$count] = $author;
 					$output .= '<a class="directory-link" href="' . $host . '">'. $author . '</a><br/>';
 				}
