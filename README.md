@@ -8,4 +8,4 @@ Add [wmdirectory] in any post/page or `<?php echo do_shortcode("[wmdirectory]");
 
 Requires the indieweb Semantic Linkbacks plugin.
 
-Version: 0.5.0
+Version: 0.6.0
